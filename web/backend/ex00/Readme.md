@@ -2,7 +2,9 @@
 
 <b>Goal</b>: In any language, create a file that runs a server on the 3000 port, your server shoulb accessible on this address: http://localhost:3000.
 
-<b>How to test</b>: After you run your server just run:
+<b>Filename</b>: Sever, so for example if you choose to do in C is going to be `server.c`, in JavaScript is going to be `server.js`
+
+<b>How to test locally</b>: After you run your server just run:
 ```
 ./test_script.sh
 ```

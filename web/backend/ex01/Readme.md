@@ -11,11 +11,6 @@
 
 <b>How to test</b>: 
 
-Testing by yourself, run the following command, if works, you should see the data above on your terminal.
-```
-curl http://localhost:3000/batman
-```
-
 After you run your server just run:
 ```
 ./test_script.sh
