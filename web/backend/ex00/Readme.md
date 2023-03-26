@@ -6,3 +6,5 @@
 ```
 ./test.sh
 ```
+
+<b>Important:</b> Your server needs to be running at the time you make the push, otherwise the test will fail.
