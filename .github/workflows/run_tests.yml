@@ -29,11 +29,19 @@ jobs:
     - name: Run tests for modified exercise folders
       run: |
         before_commit=${{ github.event.before }}
+        is_first_commit=false
         if [ "$before_commit" = "0000000000000000000000000000000000000000" ]; then
           before_commit=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+          is_first_commit=true
         fi
 
         modified_files=$(git diff --name-only $before_commit ${{ github.event.after }})
+
+        if $is_first_commit; then
+          echo "First commit detected, only validating folders with a server file."
+          modified_files=$(echo "$modified_files" | grep -E '.*/server\.(js|go|py|c)')
+        fi
+
         modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
 
         # If there are no modified exercise folders, exit
