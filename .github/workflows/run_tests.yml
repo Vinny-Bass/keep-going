@@ -20,34 +20,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y curl jq
 
-    - name: Run server
-      run: |
-        # Determine the file type
-        if [ -f server.js ]; then
-          echo "Running server.js"
-          node server.js &
-          server_pid=$!
-        elif [ -f server.go ]; then
-          echo "Running server.go"
-          go run server.go &
-          server_pid=$!
-        elif [ -f server.py ]; then
-          echo "Running server.py"
-          python server.py &
-          server_pid=$!
-        elif [ -f server.c ]; then
-          echo "Running server.c"
-          gcc server.c -o server
-          ./server &
-          server_pid=$!
-        else
-          echo "Server file not found."
-          exit 1
-        fi
-
-        # Add a small delay to allow the server to start before running tests
-        sleep 5
-
     - name: Run tests for modified exercise folders
       run: |
         modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
@@ -66,6 +38,32 @@ jobs:
             # Go inside the exercise folder
             cd "$exercise_dir"
 
+            # Determine the file type
+            if [ -f server.js ]; then
+              echo "Running server.js"
+              node server.js &
+              server_pid=$!
+            elif [ -f server.go ]; then
+              echo "Running server.go"
+              go run server.go &
+              server_pid=$!
+            elif [ -f server.py ]; then
+              echo "Running server.py"
+              python server.py &
+              server_pid=$!
+            elif [ -f server.c ]; then
+              echo "Running server.c"
+              gcc server.c -o server
+              ./server &
+              server_pid=$!
+            else
+              echo "Server file not found."
+              exit 1
+            fi
+
+            # Add a small delay to allow the server to start before running tests
+            sleep 5
+
             # Run the test script and store the exit status
             ./test_script.sh
             test_status=$?
@@ -77,6 +75,11 @@ jobs:
             if [ $test_status -ne 0 ]; then
                 echo "Tests failed in $exercise_dir. Push rejected."
                 exit 1
+            fi
+
+            if [ -n "$server_pid" ]; then
+              echo "Stopping server (PID: $server_pid)"
+              kill $server_pid
             fi
         done
 
