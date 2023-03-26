@@ -4,9 +4,6 @@ on:
   push:
     branches-ignore:
       - main
-  pull_request:
-    branches-ignore:
-      - main
 
 jobs:
   run_tests:
@@ -25,17 +22,7 @@ jobs:
 
     - name: Run tests for modified exercise folders
       run: |
-        # Get the base commit for the current branch or PR
-        if [[ $GITHUB_BASE_REF ]]; then
-          # For pull requests
-          base_commit=$(git merge-base refs/remotes/origin/$GITHUB_BASE_REF HEAD)
-        else
-          # For pushes
-          base_commit=$(git rev-parse HEAD^)
-        fi
-
-        # Get the list of modified exercise folders
-        modified_files=$(git diff --name-only "$base_commit" HEAD)
+        modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
         modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
 
         # If there are no modified exercise folders, exit
