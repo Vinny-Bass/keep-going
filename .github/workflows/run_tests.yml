@@ -43,6 +43,12 @@ jobs:
           base_commit=$(git rev-parse HEAD^)
         fi
 
+        # Check if the base commit is empty
+        if [ -z "$base_commit" ]; then
+            echo "Base commit is empty. Skipping tests."
+            exit 0
+        fi
+
         # Get the list of modified exercise folders
         modified_files=$(git diff --name-only "$remote_branch" "$current_branch")
         modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
