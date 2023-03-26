@@ -4,6 +4,7 @@
 
 <b>Filename</b>: Sever, so for example if you choose to do in C is going to be `server.c`, in JavaScript is going to be `server.js`
 
+You need to have curl installed, just search on google how to install curl in your operational system.
 <b>How to test locally</b>: After you run your server just run:
 ```
 ./test_script.sh
