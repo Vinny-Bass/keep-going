@@ -24,7 +24,15 @@ Each chapter contains exercises, allowing you to build the final project by comb
 Exercises and chapters will be released daily. While each chapter covers an extensive topic, the objective is to learn the basics and how to learn independently. This way, you can tackle the final project by knowing where and how to find the best solutions.
 
 ## Getting Started
-You'll use the command line extensively, as you did in the piscine. It's recommended to install a Linux virtual machine, use the MacOS terminal, or use the built-in Linux terminal on Windows. Choose your preferred option and set up your environment.
+You'll use the command line extensively, as you did in the piscine. It's recommended to install a Linux virtual machine, use the MacOS terminal, or use the built-in Linux terminal on Windows. 
+
+- [Click here if you want to use ubuntu on windows with an virtual machine](https://personales.unican.es/corcuerp/Linux/Install_Ubuntu_On_Windows_10_Using_VirtualBox.html#:~:text=Install%20Ubuntu%20Using%20VirtualBox&text=Click%20on%20the%20%22Iniciar%22%20button,toolbar%20to%20launch%20your%20VM.&text=This%20time%2C%20you%20have%20to,select%20your%20Ubuntu%20ISO%20file.)
+- [Click here if you want use only the linux terminal on windows](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
+
+- If you have a mac, the terminal should be already installed.
+
+
+Choose your preferred option and set up your environment.
 
 
 Next, clone this repository and create a new branch with your piscine username:
