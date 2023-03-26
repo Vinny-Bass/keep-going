@@ -28,11 +28,12 @@ jobs:
       
     - name: Run tests for modified exercise folders
       run: |
-        before=${{ github.event.before }}
-        if [ -z "$before" ]; then
-          before=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+        before_commit=${{ github.event.before }}
+        if [ "$before_commit" = "0000000000000000000000000000000000000000" ]; then
+          before_commit=4b825dc642cb6eb9a060e54bf8d69288fbee4904
         fi
-        modified_files=$(git diff --name-only $before ${{ github.event.after }})
+
+        modified_files=$(git diff --name-only $before_commit ${{ github.event.after }})
         modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
 
         # If there are no modified exercise folders, exit
