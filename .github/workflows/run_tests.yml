@@ -23,45 +23,56 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y curl jq
 
-    - name: Run tests for modified exercise folders
-      run: |
-        # Get the name of the current branch
-        current_branch=$(git rev-parse --abbrev-ref HEAD)
+  - name: Run tests for modified exercise folders
+    run: |
+      # Get the name of the current branch
+      current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-        # Get the name of the remote repository and branch to push
-        remote_name=$(git remote)
-        remote_branch=$(git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)")
+      # Skip running tests if the current branch is 'master'
+      if [ "$current_branch" = "main" ]; then
+          echo "Current branch is 'main'. Skipping tests."
+          exit 0
+      fi
 
-        # Get the list of modified exercise folders
-        modified_files=$(git diff --name-only "$remote_branch" "$current_branch")
-        modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
+      # Get the base commit for the current branch or PR
+      if [[ $GITHUB_BASE_REF ]]; then
+        # For pull requests
+        base_commit=$(git merge-base refs/remotes/origin/$GITHUB_BASE_REF HEAD)
+      else
+        # For pushes
+        base_commit=$(git rev-parse HEAD^)
+      fi
 
-        # If there are no modified exercise folders, exit
-        if [ -z "$modified_exercises" ]; then
-            echo "No exercise folders modified. Push accepted."
-            exit 0
-        fi
+      # Get the list of modified exercise folders
+      modified_files=$(git diff --name-only "$base_commit" HEAD)
+      modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
 
-        echo "Running tests for modified exercise folders before push..."
+      # If there are no modified exercise folders, exit
+      if [ -z "$modified_exercises" ]; then
+          echo "No exercise folders modified. Push accepted."
+          exit 0
+      fi
 
-        # Loop through each modified exercise folder
-        for exercise_dir in $modified_exercises; do
-            # Go inside the exercise folder
-            cd "$exercise_dir"
+      echo "Running tests for modified exercise folders before push..."
 
-            # Run the test script and store the exit status
-            ./test_script.sh
-            test_status=$?
+      # Loop through each modified exercise folder
+      for exercise_dir in $modified_exercises; do
+          # Go inside the exercise folder
+          cd "$exercise_dir"
 
-            # Go back to the main repository folder
-            cd - > /dev/null
+          # Run the test script and store the exit status
+          ./test_script.sh
+          test_status=$?
 
-            # Check if the test passed
-            if [ $test_status -ne 0 ]; then
-                echo "Tests failed in $exercise_dir. Push rejected."
-                exit 1
-            fi
-        done
+          # Go back to the main repository folder
+          cd - > /dev/null
 
-        echo "All tests passed for modified exercise folders. Push accepted."
-        exit 0
+          # Check if the test passed
+          if [ $test_status -ne 0 ]; then
+              echo "Tests failed in $exercise_dir. Push rejected."
+              exit 1
+          fi
+      done
+
+      echo "All tests passed for modified exercise folders. Push accepted."
+      exit 0
