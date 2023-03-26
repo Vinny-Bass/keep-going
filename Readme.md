@@ -48,7 +48,7 @@ The project structure is as follows:
 Example: web/backend/ex00
 ```
 
-You don't need to create folders. Each exercise folder (e.g., `ex00`) will contain a `Readme.md` with instructions and a test file. Run your program and then run the test file. If it passes, you can commit and push your exercise.
+You don't need to create folders, the exercises folders will be created already for you. Each exercise folder (e.g., `ex00`) will contain a `Readme.md` with instructions and a test file. Run your program and then run the test file. If it passes, you can commit and push your exercise.
 
 Each chapter will also include optional additional content to enhance your learning.
 

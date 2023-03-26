@@ -20,6 +20,12 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y curl jq
 
+    - name: Set up Go
+      if: contains(github.workspace, 'server.go')
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+      
     - name: Run tests for modified exercise folders
       run: |
         modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
@@ -57,7 +63,7 @@ jobs:
               ./server &
               server_pid=$!
             else
-              echo "Server file not found."
+              echo "Server file not found on $exercise_dir folder."
               exit 1
             fi
 
@@ -65,6 +71,7 @@ jobs:
             sleep 5
 
             # Run the test script and store the exit status
+            echo "Running test on $exercise_dir"
             ./test_script.sh
             test_status=$?
 
