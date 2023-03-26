@@ -25,15 +25,6 @@ jobs:
 
     - name: Run tests for modified exercise folders
       run: |
-        # Get the name of the current branch
-        current_branch=$(git rev-parse --abbrev-ref HEAD)
-
-        # Skip running tests if the current branch is 'master'
-        if [ "$current_branch" = "main" ]; then
-            echo "Current branch is 'main'. Skipping tests."
-            exit 0
-        fi
-
         # Get the base commit for the current branch or PR
         if [[ $GITHUB_BASE_REF ]]; then
           # For pull requests
