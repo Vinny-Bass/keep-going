@@ -1,20 +1,20 @@
-# Web Development Roadmap for Beginners
+# Web Development Content
 Welcome to the Web Development first project! This project is designed to help you understand the fundamentals of web development and how the web works. In the end of this project you will have a strong foundation in web development and kickstart your journey.
 
 Table of Contents
-1. Introduction to the Web
-2. HTML, CSS, and JavaScript
-3. Web Browsers
-4. Web Servers
-5. HTTP & REST
-6. Version Control
-7. Frontend Development
-8. Backend Development
-9. Databases
-10. Web Security
-11. Deployment & Hosting
-12. Performance Optimization
-13. Resources
+1. [Introduction to the Web](#introduction-to-the-web)
+2. [HTML, CSS, and JavaScript](#html-css-and-javascript)
+3. [Web Browsers](#web-browsers)
+4. [Web Servers](#web-servers)
+5. [HTTP & REST](#http--rest)
+6. [Version Control](#version-control)
+7. [Frontend Development](#frontend-development)
+8. [Backend Development](#backend-development)
+9. [Databases](#databases)
+10. [Web Security](#web-security)
+11. [Deployment & Hosting](#deployment--hosting)
+12. [Performance Optimization](#performance-optimization)
+13. [Resources](#resources)
 
 ## Introduction to the Web
 Learn about the history of the World Wide Web, its components, and how they work together to deliver web pages and applications.
