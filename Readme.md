@@ -50,6 +50,8 @@ Example: web/backend/ex00
 
 You don't need to create folders, the exercises folders will be created already for you. Each exercise folder (e.g., `ex00`) will contain a `Readme.md` with instructions and a test file. Run your program and then run the test file. If it passes, you can commit and push your exercise.
 
+After you run your test locally and push you code, you need to go to the repository page on github, click on actions tab, and see if you code was pushed with success, the name of the action that you need to check will be the same message that you used on your commit
+
 Each chapter will also include optional additional content to enhance your learning.
 
 ## Have Fun!
