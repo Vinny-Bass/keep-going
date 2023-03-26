@@ -53,4 +53,4 @@ You don't need to create folders. Each exercise folder (e.g., `ex00`) will conta
 Each chapter will also include optional additional content to enhance your learning.
 
 ## Have Fun!
-Remember, there's no magic formula to becoming a good programmer. Just study, practice, and stay focused (and avoid any questionable substances 😉). Good luck, and enjoy the challenge!s
+Remember, there's no magic formula to becoming a good programmer. Just study, practice, and stay focused (and avoid any questionable substances 😉). Good luck, and enjoy the challenge!
