@@ -1,0 +1,67 @@
+name: Run Tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl jq
+
+    - name: Run tests for modified exercise folders
+      run: |
+        # Get the name of the current branch
+        current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+        # Get the name of the remote repository and branch to push
+        remote_name=$(git remote)
+        remote_branch=$(git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)")
+
+        # Get the list of modified exercise folders
+        modified_files=$(git diff --name-only "$remote_branch" "$current_branch")
+        modified_exercises=$(echo "$modified_files" | grep -E '.*/ex' | awk -F'/' 'BEGIN{OFS="/"}{print $1, $2, $3}' | sort | uniq)
+
+        # If there are no modified exercise folders, exit
+        if [ -z "$modified_exercises" ]; then
+            echo "No exercise folders modified. Push accepted."
+            exit 0
+        fi
+
+        echo "Running tests for modified exercise folders before push..."
+
+        # Loop through each modified exercise folder
+        for exercise_dir in $modified_exercises; do
+            # Go inside the exercise folder
+            cd "$exercise_dir"
+
+            # Run the test script and store the exit status
+            ./test_script.sh
+            test_status=$?
+
+            # Go back to the main repository folder
+            cd - > /dev/null
+
+            # Check if the test passed
+            if [ $test_status -ne 0 ]; then
+                echo "Tests failed in $exercise_dir. Push rejected."
+                exit 1
+            fi
+        done
+
+        echo "All tests passed for modified exercise folders. Push accepted."
+        exit 0
