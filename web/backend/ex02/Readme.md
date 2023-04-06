@@ -1,6 +1,6 @@
-# EX01 - Starting with API's
+# EX02 - Starting with data manipulation
 
-<b>Goal</b>: In any language, create a file that runs a server on the 3000 port, this server should have a route as following `/batman`, and should be able to receive a GET request and return data on data.json file located on this repo.
+<b>Goal</b>: In any language, create a file that runs a server on the 3000 port, this server should have a route as following `/batman`, and should be able to receive a GET request and return data on the `data.json` file located on this repo.
 
 <b>How to test</b>: 
 
