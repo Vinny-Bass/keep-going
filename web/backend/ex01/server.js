@@ -3,7 +3,7 @@ const http = require('http');
 const server = http.createServer((req, res) => {
   if (req.url === '/batman' && req.method === 'GET') {
     const data = {
-      name: 'Bruce Wayne',
+      name: 'Bruce wayne',
       habilities: 'Worlds great detective, rich, handsome',
       weakness: 'any dark ally, catwoman',
     };
